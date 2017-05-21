@@ -244,14 +244,14 @@ class Disc:
 
 			else:
 				# Partial copy
-				print("Partial copy: blocksize=%d, blocks=%d, mod=%d" % (blocksize, blocks, blocksize - (cursize % blocksize)))
+				print(("Partial copy: blocksize=%d, blocks=%d, mod=%d" % (blocksize, blocks, blocksize - (cursize % blocksize))))
 
 				# First, need to copy remaining block
 				if cursize % blocksize != 0:
 					print("Partial block copy")
 					# Finish remainder of block
 					args = ['dd', 'if=%s'%inf, 'of=%s'%outf, 'bs=1', 'count=%d' % (blocksize - (cursize % blocksize)), 'skip=%d'%cursize, 'seek=%d'%cursize]
-					print(" ".join(args))
+					print((" ".join(args)))
 					ret = subprocess.call(args)
 					if ret != 0:
 						raise Exception("Failed to partial copy remaining block %d of disc '%s' to drive" % (int(cursize/blocksize)+1, label))
@@ -265,7 +265,7 @@ class Disc:
 				#   * Remaining blocks: blocks - int(cursize / blocksize)
 				#   * Starting block: int(cursize / blocksize)
 				args = ['dd', 'if=%s'%inf, 'of=%s'%outf, 'bs=%d' % blocksize, 'count=%d' % (blocks - int(cursize / blocksize)), 'skip=%d'%int(cursize/blocksize), 'seek=%d'%int(cursize/blocksize)]
-				print(" ".join(args))
+				print((" ".join(args)))
 				ret = subprocess.call(args)
 				if ret != 0:
 					raise Exception("Failed to copy remaining %d blocks (total %d) of disc '%s' to drive" % (blocks - int(cursize/blocksize)+1, blocks, label))
@@ -273,7 +273,7 @@ class Disc:
 		else:
 			# Dup entire disc to drive
 			args = ['dd', 'if=%s'%inf, 'of=%s'%outf, 'bs=%d'%blocksize, 'count=%d'%blocks]
-			print(" ".join(args))
+			print((" ".join(args)))
 			ret = subprocess.call(args)
 			if ret != 0:
 				raise Exception("Failed to copy disc '%s' to drive" % label)
